@@ -1,9 +1,16 @@
 import random
 import socket
 import threading
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
 
-# Replace this with your actual LAN IP or use "" to let OS choose
+#Chatbot
+chatbot = ChatBot('Ron Obvious')
+trainer = ChatterBotCorpusTrainer(chatbot)
+trainer.train("./chatterbot-corpus-master/chatterbot_corpus/data/english")
 
+# Get a response to an input statement
+chatbot.get_response("Hello, how are you today?")
 SERVER_IP = "172.17.215.200"  # <-- replace with your server LAN IP
 SERVER_PORT = 9999
 
@@ -12,14 +19,17 @@ client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 client.bind(("",random.randint(8000,9000)))
 
 
-name = input("Nickname: ")
+
 
 def receive(): 
     print("Starting receiver")
     while True:
         try:
+            print("hi")
             message, _ = client.recvfrom(1024)
             print(message.decode())
+            bot_response = chatbot.get_response(f"{message}")
+            client.sendto(f"Chatboy: {bot_response}".encode(), (SERVER_IP, SERVER_PORT))
         except Exception as e: 
             print("Error receiving:", e)
 
@@ -27,14 +37,6 @@ def receive():
 t = threading.Thread(target=receive, daemon=True)
 t.start()
 
-# Send signup message
-client.sendto(f"SIGNUP_TAG:{name}".encode(), (SERVER_IP, SERVER_PORT))
-
-# Main loop to send messages
 while True:
-    message = input("")
-    if message == "!q":
-        print("Exiting...")
-        break
-    else:
-        client.sendto(f"{name}: {message}".encode(), (SERVER_IP, SERVER_PORT))
+    pass
+
