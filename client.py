@@ -3,7 +3,7 @@ import socket
 import threading
 
 client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-client.bind("0.0.0.0", random.randint(8000, 9000))
+client.bind(("0.0.0.0", random.randint(8000, 9000)))
 
 name = input ("Nickname: ")
 

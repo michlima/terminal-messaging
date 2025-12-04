@@ -1,12 +1,12 @@
 import socket 
 import threading 
 import queue
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
+# from chatterbot import ChatBot
+# from chatterbot.trainers import ChatterBotCorpusTrainer
 
-chatbot = ChatBot('Ron Obvious')
-trainer = ChatterBotCorpusTrainer(chatbot)
-trainer.train("./chatterbot-corpus-master/chatterbot_corpus/data/english/")
+# chatbot = ChatBot('Ron Obvious')
+# trainer = ChatterBotCorpusTrainer(chatbot)
+# trainer.train("./chatterbot-corpus-master/chatterbot_corpus/data/english/")
 
 
 messages = queue.Queue()
@@ -47,9 +47,10 @@ t2.start()
 
 
 # chatBot
-while True:
-    message = input("Enter message:")
 
-    respose = chatbot.get_response(f"{message}")
-    print(respose)
+# while True:
+#     message = input("Enter message:")
+
+#     respose = chatbot.get_response(f"{message}")
+#     print(respose)
 
